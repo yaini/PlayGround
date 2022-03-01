@@ -1,8 +1,5 @@
 package creational;
 
-import java.util.Calendar;
-import java.util.List;
-
 public class FactoryMethod {
 
     public static void main(String[] args){
