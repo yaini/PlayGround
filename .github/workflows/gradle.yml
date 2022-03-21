@@ -26,10 +26,8 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
+      uses: gradle/gradle-build-action@v2
       with:
         arguments: build
+        gradle-version: 6.8
