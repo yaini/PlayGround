@@ -20,6 +20,6 @@ if [ ! -z "${TARGET_PID}" ]; then
   sudo kill "${TARGET_PID}"
 fi
 
-nohup java -jar -Dserver.port=${TARGET_PORT} /home/ec2-user/playground-logging/build/libs/* > /home/ec2-user/nohup.out 2>&1 &
+nohup java -jar -Dserver.port=${TARGET_PORT} /home/ec2-user/SpringStudy/simple/build/libs/simple-0.0.1-SNAPSHOT.jar > /home/ec2-user/nohup.out 2>&1 &
 echo "> Now new WAS runs at ${TARGET_PORT}."
 exit 0
