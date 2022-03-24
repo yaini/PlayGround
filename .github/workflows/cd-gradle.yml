@@ -9,7 +9,7 @@ on:
 
 env:
   S3_BUCKET_NAME: yaini-deploy
-  PROJECT_NAME: SpringStudy
+  PROJECT_NAME: simple
 
 jobs:
   build:
