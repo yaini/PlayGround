@@ -1,4 +1,5 @@
 rootProject.name = 'study'
 
 include 'design-pattern'
+include 'simple'
 
