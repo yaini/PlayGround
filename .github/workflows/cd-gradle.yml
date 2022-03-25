@@ -2,10 +2,7 @@
 name: Java CD with gradle and codedeploy
 
 on:
-  push:
-    branches: [ spring-7-github-action-cd ]
-  pull_request:
-    branches: [ master ]
+  workflow_dispatch:
 
 env:
   S3_BUCKET_NAME: yaini-deploy
