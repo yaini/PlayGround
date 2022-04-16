@@ -2,6 +2,7 @@ package com.yaini.repository;
 
 import com.yaini.entity.SimpleEntity;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +13,8 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// TODO integration test docker 추가 후 적용
+@Disabled
 @SpringBootTest
 public class JPAPersistenceContextTest {
 
