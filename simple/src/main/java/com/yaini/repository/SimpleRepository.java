@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SimpleRepository extends JpaRepository<SimpleEntity, Long> {
+
+    void deleteAllByName(String name);
 }
