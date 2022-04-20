@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.6.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'me.champeau.jmh' version '0.6.6'
     id 'java'
 }
 
@@ -10,6 +11,13 @@ sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
+}
+
+jmh {
+    fork = 1
+    warmupIterations = 3
+    iterations = 3
+    verbosity = 'EXTRA'
 }
 
 dependencies {
