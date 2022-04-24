@@ -13,13 +13,6 @@ repositories {
     mavenCentral()
 }
 
-jmh {
-    fork = 1
-    warmupIterations = 3
-    iterations = 3
-    verbosity = 'EXTRA'
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
