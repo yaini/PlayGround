@@ -8,6 +8,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 'simple'
       MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: 'simple'
       TZ: Asia/Seoul
 
     volumes:
