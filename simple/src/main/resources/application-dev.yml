@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:13306/simple
+    url: jdbc:mysql://database-mysql:3306/simple
     username: root
     password: simple
 
@@ -10,8 +10,3 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
-    database: mysql
-    properties:
-      hibernate:
-        format_sql: true
-
