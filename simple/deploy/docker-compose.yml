@@ -32,11 +32,11 @@ services:
       - ADMINER_PLUGINS=tables-filter tinymce
 
   application:
-    container_name: 'app_simple'
+    container_name: app-simple
     build: ../
     restart: always
     ports:
-      - '8080:8080'
+      - '80:8080'
 
     depends_on:
       - database-mysql
