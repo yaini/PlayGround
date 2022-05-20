@@ -29,3 +29,18 @@ services:
       - ADMINER_DEFAULT_SERVER=database-mysql8
       - ADMINER_DESIGN=hydra
       - ADMINER_PLUGINS=tables-filter tinymce
+
+  localstack:
+    container_name: aws-infra
+    image: localstack/localstack
+    ports:
+      - "4572:4572"
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - PORT_WEB_UI=9090
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "./localstack:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
