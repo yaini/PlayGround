@@ -34,6 +34,7 @@ services:
     container_name: aws-infra
     image: localstack/localstack
     ports:
+      - "4566:4566"
       - "4572:4572"
     environment:
       - SERVICES=s3
