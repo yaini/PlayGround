@@ -40,8 +40,7 @@ services:
       - SERVICES=s3
       - DEBUG=1
       - DATA_DIR=/tmp/localstack/data
-      - PORT_WEB_UI=9090
-      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DOCKER_SOCK=unix:///var/run/docker.sock
     volumes:
       - "./localstack:/tmp/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"

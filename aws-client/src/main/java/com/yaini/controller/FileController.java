@@ -1,7 +1,7 @@
 package com.yaini.controller;
 
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.yaini.controller.support.MultiPartResponseGenerator;
+import com.yaini.controller.response.ApiResponse;
+import com.yaini.controller.support.ApiResponseGenerator;
 import com.yaini.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +17,11 @@ public class FileController {
 
     @GetMapping("/download")
     public ResponseEntity<byte[]> download(final @RequestParam String fileName) {
-        return MultiPartResponseGenerator.of(fileService.download(fileName), fileName);
+        return ApiResponseGenerator.of(fileService.download(fileName), fileName);
     }
 
     @PostMapping("/upload")
-    public ObjectMetadata upload(@RequestParam("file") MultipartFile file) {
-        return fileService.upload(file);
+    public ApiResponse<String> upload(@RequestParam("file") MultipartFile file) {
+        return ApiResponseGenerator.of(fileService.upload(file));
     }
 }

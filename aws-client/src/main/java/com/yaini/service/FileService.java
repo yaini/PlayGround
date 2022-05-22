@@ -26,7 +26,7 @@ public class FileService {
         S3Object fullObject = s3Client.getObject(BUCKET, fileKey);
 
         if (fullObject == null) {
-            throw new RuntimeException();
+            throw new UncaughtException("File Does Not Exist");
         }
 
         try {
@@ -36,16 +36,20 @@ public class FileService {
         }
     }
 
-    public ObjectMetadata upload(final MultipartFile file) {
+    public String upload(final MultipartFile file) {
+        if (file.isEmpty()) {
+            throw new UncaughtException("File is Empty");
+        }
+
         String key = UUID.randomUUID() + "_" + file.getOriginalFilename();
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(file.getContentType());
+        metadata.setContentLength(file.getSize());
 
         try {
             PutObjectRequest request = new PutObjectRequest(BUCKET, key, file.getInputStream(), metadata);
-            // TODO 접근 권한 체크 request.withCannedAcl(CannedAccessControlList.AuthenticatedRead);
             PutObjectResult result = s3Client.putObject(request);
-            return result.getMetadata();
+            return key;
         } catch (IOException e) {
             throw new UncaughtException(e);
         }
