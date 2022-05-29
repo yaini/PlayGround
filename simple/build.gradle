@@ -14,19 +14,32 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'mysql:mysql-connector-java'
-
-    annotationProcessor 'org.projectlombok:lombok'
-
-    testImplementation 'org.junit.jupiter:junit-jupiter-api'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+ext{
+    log4jVersion = '1.2.17'
 }
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-log4j2")
+
+    modules {
+        module("org.springframework.boot:spring-boot-starter-logging") {
+            replacedBy("org.springframework.boot:spring-boot-starter-log4j2")
+        }
+    }
+
+    compileOnly("org.projectlombok:lombok")
+    runtimeOnly("mysql:mysql-connector-java")
+
+    annotationProcessor("org.projectlombok:lombok")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+}
+
 
 test {
     useJUnitPlatform()
