@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Configuration status="INFO">
     <Properties>
-        <Property name="LOG_PATTERN">%d{HH:mm:ss.SSSZ} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="LOG_DATEFORMAT_PATTERN">{yyyy-MM-dd HH:mm:ss.SSS}</Property>
+        <Property name="LOG_LEVEL_PATTERN">{-%5p}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} %style{${sys:PID}}{magenta} [%15.15t] %style{%-40.40C{1.}}{cyan} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}</Property>
     </Properties>
     <Appenders>
-        <Console name="ConsoleLog" target="SYSTEM_OUT">
-            <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8"/>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout disableAnsi="false" pattern="%d${LOG_DATEFORMAT_PATTERN} %highlight${LOG_LEVEL_PATTERN}"/>
         </Console>
-        <RollingFile name="FileLog"
-                     fileName="./logs/spring.log"
-                     filePattern="./logs/spring-%d{yyyy-MM-dd}-%i.log">
-            <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8" />
+        <RollingFile name="FileAppender"
+                     fileName="logs/spring.log"
+                     filePattern="logs/spring-%d{yyyy-MM-dd}-%i.log">
+            <JsonLayout complete="false" compact="false" charset="UTF-8">
+                <KeyValuePair key="service" value="simple" />
+            </JsonLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" />
                 <SizeBasedTriggeringPolicy size="10000KB" />
@@ -20,8 +23,8 @@
     </Appenders>
     <Loggers>
         <Root level="info">
-            <AppenderRef ref="ConsoleLog" />
-            <AppenderRef ref="FileLog" />
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="FileAppender" />
         </Root>
     </Loggers>
 </Configuration>
