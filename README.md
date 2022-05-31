@@ -21,3 +21,6 @@
 ### [SPRING-13 Spring Profile](https://github.com/yaini/PlayGround/tree/spring-13-profile)
 
 ### [SPRING-15 LocalStack - S3](https://github.com/yaini/PlayGround/tree/spring-15-s3-localstack)
+
+### [SPRING-16 Logging - Log4j2](https://github.com/yaini/PlayGround/tree/spring-16-logging-log4j)
+
