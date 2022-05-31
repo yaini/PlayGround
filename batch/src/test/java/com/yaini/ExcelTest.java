@@ -1,20 +1,26 @@
 package com.yaini;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class CreateExcelTest {
+public class ExcelTest {
 
     private final static String FILE_PATH = "excel/";
     private final static String FILE_NAME = "test.xlsx";
@@ -48,7 +54,38 @@ public class CreateExcelTest {
         FileOutputStream out = new FileOutputStream(new File(path.toString(), FILE_NAME));
         workbook.write(out);
         out.close();
+    }
 
+    @Test
+    public void readExcel() throws IOException {
+        ClassPathResource resource = new ClassPathResource(FILE_PATH);
+        Path path = Paths.get(resource.getURI());
+        FileInputStream in = new FileInputStream(new File(path.toString(), FILE_NAME));
+
+        XSSFWorkbook workbook = new XSSFWorkbook(in);
+        XSSFSheet sheet = workbook.getSheet("data");
+        DataFormatter formatter = new DataFormatter();
+        FormulaEvaluator formula = new XSSFFormulaEvaluator(workbook);
+
+        Iterator<Row> rowIterator = sheet.iterator();
+
+        List<Column> lists = new ArrayList<>();
+
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+
+            row.getCell(0);
+
+            lists.add(new Column(
+                    Long.parseLong(formatter.formatCellValue(row.getCell(0), formula)),
+                    formatter.formatCellValue(row.getCell(1), formula),
+                    formatter.formatCellValue(row.getCell(2), formula)
+            ));
+        }
+
+        in.close();
     }
 
     class Column {
