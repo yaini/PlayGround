@@ -14,11 +14,18 @@ repositories {
     mavenCentral()
 }
 
+ext{
+    apachePoiVersion = "5.2.2"
+}
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-batch")
+    implementation("org.apache.poi:poi-ooxml:${apachePoiVersion}")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+
+    implementation("org.springframework.boot:spring-boot-starter-test")
 
 }
 
