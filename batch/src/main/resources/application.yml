@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:13306/batch
+    username: root
+    password: simple
+
+excel:
+  to:
+    database:
+      job:
+        source:
+          file:
+            path: "excel/test.xlsx"

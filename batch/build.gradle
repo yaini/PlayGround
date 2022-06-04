@@ -21,9 +21,12 @@ ext{
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-batch")
     implementation("org.apache.poi:poi-ooxml:${apachePoiVersion}")
+    implementation("org.springframework.batch.extensions:spring-batch-excel:0.1.1")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+
+    runtimeOnly("mysql:mysql-connector-java")
 
     implementation("org.springframework.boot:spring-boot-starter-test")
 
