@@ -22,6 +22,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-batch")
     implementation("org.apache.poi:poi-ooxml:${apachePoiVersion}")
     implementation("org.springframework.batch.extensions:spring-batch-excel:0.1.1")
+    implementation("javax.validation:validation-api")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")

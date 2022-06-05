@@ -1,7 +1,9 @@
-package com.yaini.batch;
+package com.yaini.adapter.in.batch;
 
-import com.yaini.batch.processor.StudentProcessor;
-import com.yaini.batch.writer.StudentWriter;
+import com.yaini.adapter.in.batch.model.StudentReadItem;
+import com.yaini.adapter.in.batch.model.StudentWriteItem;
+import com.yaini.adapter.in.batch.processor.StudentProcessor;
+import com.yaini.adapter.in.batch.writer.StudentWriter;
 import com.yaini.domain.model.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -29,25 +31,25 @@ public class BatchConfig {
     private final StudentWriter studentWriter;
 
     @Bean
-    ItemReader<Student> excelStudentReader(Environment environment) {
-        PoiItemReader<Student> reader = new PoiItemReader<>();
+    ItemReader<StudentReadItem> excelStudentReader(Environment environment) {
+        PoiItemReader<StudentReadItem> reader = new PoiItemReader<>();
         reader.setLinesToSkip(1);
         reader.setResource(new ClassPathResource(environment.getRequiredProperty(PROPERTY_EXCEL_SOURCE_FILE_PATH)));
         reader.setRowMapper(excelRowMapper());
         return reader;
     }
 
-    private RowMapper<Student> excelRowMapper() {
-        BeanWrapperRowMapper<Student> rowMapper = new BeanWrapperRowMapper<>();
-        rowMapper.setTargetType(Student.class);
+    private RowMapper<StudentReadItem> excelRowMapper() {
+        BeanWrapperRowMapper<StudentReadItem> rowMapper = new BeanWrapperRowMapper<>();
+        rowMapper.setTargetType(StudentReadItem.class);
         return rowMapper;
     }
 
     @Bean
-    Step excelFileToDatabaseStep(ItemReader<Student> excelStudentReader,
+    Step excelFileToDatabaseStep(ItemReader<StudentReadItem> excelStudentReader,
                                  StepBuilderFactory stepBuilderFactory) {
         return stepBuilderFactory.get("excelFileToDatabaseStep")
-                .<Student, Student>chunk(1)
+                .<StudentReadItem, StudentWriteItem>chunk(100)
                 .reader(excelStudentReader)
                 .processor(studentProcessor)
                 .writer(studentWriter)

@@ -1,8 +1,10 @@
 package com.yaini.port.in;
 
+import com.yaini.domain.command.SaveStudentCommand;
 import com.yaini.domain.model.Student;
+import java.util.Collection;
 
 public interface SaveStudentUseCase {
 
-    Student execute(final Student student);
+    Collection<Student> execute(final Collection<SaveStudentCommand> command);
 }
