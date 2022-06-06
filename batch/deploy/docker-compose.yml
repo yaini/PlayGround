@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  database-mysql:
+    container_name: database-mysql
+    image: mysql/mysql-server:8.0
+
+    environment:
+      MYSQL_ROOT_PASSWORD: 'batch'
+      MYSQL_ROOT_HOST: '%'
+      TZ: Asia/Seoul
+
+    volumes:
+      - ./mysql-init.d:/docker-entrypoint-initdb.d
+
+    ports:
+      - '23306:3306'
+
+    command:
+      - '--character-set-server=utf8mb4'
+      - '--collation-server=utf8mb4_unicode_ci'
+
+  database-adminer:
+    container_name: database-adminer
+    image: adminer:latest
+    ports:
+      - "28080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: database-mysql
+      ADMINER_DESIGN: hydra
+      ADMINER_PLUGINS: tables-filter tinymce
+

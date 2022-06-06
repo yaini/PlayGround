@@ -3,4 +3,5 @@ rootProject.name = 'study'
 include 'design-pattern'
 include 'simple'
 include 'aws-client'
+include 'batch'
 
