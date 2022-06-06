@@ -1,9 +1,10 @@
-package com.yaini.domain.command;
+package com.yaini.adapter.in.batch.item;
 
 import com.yaini.adapter.in.batch.item.enumerated.GenderType;
-import com.yaini.domain.model.Student;
+import com.yaini.adapter.in.batch.support.SelfValidatable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
@@ -15,7 +16,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SaveStudentCommand {
+@Getter
+public class StudentWriteItem extends SelfValidatable<StudentWriteItem> {
     @Min(1)
     private Long id;
     @NotBlank
@@ -29,14 +31,10 @@ public class SaveStudentCommand {
     @PastOrPresent
     private LocalDateTime admission;
 
-    public Student getStudent() {
-        return Student.builder()
-                .id(this.id)
-                .studentNumber(this.studentNumber)
-                .name(this.name)
-                .gender(this.gender)
-                .graduation(this.graduation)
-                .admission(this.admission)
-                .build();
+    @Override
+    public StudentWriteItem validate() {
+        super.validateSelf(this);
+        return this;
     }
+
 }

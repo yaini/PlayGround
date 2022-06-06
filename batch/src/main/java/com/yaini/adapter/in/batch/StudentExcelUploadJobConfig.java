@@ -1,10 +1,9 @@
 package com.yaini.adapter.in.batch;
 
-import com.yaini.adapter.in.batch.model.StudentReadItem;
-import com.yaini.adapter.in.batch.model.StudentWriteItem;
+import com.yaini.adapter.in.batch.item.StudentReadItem;
+import com.yaini.adapter.in.batch.item.StudentWriteItem;
 import com.yaini.adapter.in.batch.processor.StudentProcessor;
 import com.yaini.adapter.in.batch.writer.StudentWriter;
-import com.yaini.domain.model.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -23,7 +22,7 @@ import org.springframework.core.io.ClassPathResource;
 
 @RequiredArgsConstructor
 @Configuration
-public class BatchConfig {
+public class StudentExcelUploadJobConfig {
 
     private static final String PROPERTY_EXCEL_SOURCE_FILE_PATH = "excel.to.database.job.source.file.path";
 

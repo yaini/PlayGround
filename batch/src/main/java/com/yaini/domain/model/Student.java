@@ -1,8 +1,9 @@
 package com.yaini.domain.model;
 
-import com.yaini.adapter.in.batch.model.enumerated.GenderType;
-import java.time.LocalDateTime;
+import com.yaini.adapter.in.batch.item.enumerated.GenderType;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
