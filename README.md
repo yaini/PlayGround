@@ -24,3 +24,5 @@
 
 ### [SPRING-16 Logging - Log4j2](https://github.com/yaini/PlayGround/tree/spring-16-logging-log4j)
 
+### [SPRING-17 Spring Batch](https://github.com/yaini/PlayGround/tree/spring-17-batch)
+
