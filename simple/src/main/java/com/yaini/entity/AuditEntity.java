@@ -1,8 +1,6 @@
 package com.yaini.entity;
 
 import lombok.Getter;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,8 +13,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @EntityListeners(AuditingEntityListener.class)
-@SQLDelete(sql = "UPDATE simple SET deleted=true where id=?")
-@Where(clause = "deleted=false")
 @MappedSuperclass
 public abstract class AuditEntity {
 
