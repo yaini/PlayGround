@@ -8,14 +8,15 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.util.Streamable;
 import org.springframework.lang.Nullable;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.*;
 
+@Transactional
 public class CustomJPARepositoryImpl<T, ID extends Serializable>
         extends SimpleJpaRepository<T, ID> implements CustomJPARepository<T, ID> {
 
@@ -33,25 +34,21 @@ public class CustomJPARepositoryImpl<T, ID extends Serializable>
         return Specification.where(new DeletedIsNull<T>()).or(new DeletedIsFalse<>());
     }
 
-    @Transactional
     @Override
     public List<T> findAll() {
         return super.findAll(notDeleted());
     }
 
-    @Transactional
     @Override
     public List<T> findAll(Sort sort) {
         return super.findAll(notDeleted(), sort);
     }
 
-    @Transactional
     @Override
     public Page<T> findAll(Pageable pageable) {
         return super.findAll(notDeleted(), pageable);
     }
 
-    @Transactional
     @Override
     public List<T> findAllById(Iterable<ID> ids) {
         if (!ids.iterator().hasNext()) {
@@ -76,20 +73,17 @@ public class CustomJPARepositoryImpl<T, ID extends Serializable>
         return query.setParameter(specification.parameter, idCollection).getResultList();
     }
 
-    @Transactional
     @Override
     public long count() {
         return super.count(notDeleted());
     }
 
-    @Transactional
     @Override
     public void deleteById(ID id) {
         T entity = this.findById(id).orElseThrow();
         this.delete(entity);
     }
 
-    @Transactional
     @Override
     public void delete(T entity) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -115,7 +109,6 @@ public class CustomJPARepositoryImpl<T, ID extends Serializable>
         em.createQuery(update).executeUpdate();
     }
 
-    @Transactional
     @Override
     public void deleteAllById(Iterable<? extends ID> ids) {
         for (ID id : ids) {
@@ -123,7 +116,6 @@ public class CustomJPARepositoryImpl<T, ID extends Serializable>
         }
     }
 
-    @Transactional
     @Override
     public void deleteAll(Iterable<? extends T> entities) {
         for (T entity : entities) {
@@ -131,7 +123,6 @@ public class CustomJPARepositoryImpl<T, ID extends Serializable>
         }
     }
 
-    @Transactional
     @Override
     public void deleteAll() {
         for (T entity : this.findAll()) {
@@ -139,19 +130,16 @@ public class CustomJPARepositoryImpl<T, ID extends Serializable>
         }
     }
 
-    @Transactional
     @Override
     public <S extends T> S save(S entity) {
         return super.save(entity);
     }
 
-    @Transactional
     @Override
     public <S extends T> List<S> saveAll(Iterable<S> entities) {
         return super.saveAll(entities);
     }
 
-    @Transactional
     @Override
     public Optional<T> findById(ID id) {
         return super.findOne(
@@ -159,49 +147,41 @@ public class CustomJPARepositoryImpl<T, ID extends Serializable>
         );
     }
 
-    @Transactional
     @Override
     public boolean existsById(ID id) {
         return findById(id).isPresent();
     }
 
-    @Transactional
     @Override
     public void flush() {
         super.flush();
     }
 
-    @Transactional
     @Override
-    public <S extends T> S saveAndFlush(S var1) {
-        return super.saveAndFlush(var1);
+    public <S extends T> S saveAndFlush(S entity) {
+        return super.saveAndFlush(entity);
     }
 
-    @Transactional
     @Override
     public <S extends T> List<S> saveAllAndFlush(Iterable<S> entities) {
         return super.saveAllAndFlush(entities);
     }
 
-    @Transactional
     @Override
     public void deleteAllInBatch(Iterable<T> entities) {
 
     }
 
-    @Transactional
     @Override
     public void deleteAllByIdInBatch(Iterable<ID> ids) {
 
     }
 
-    @Transactional
     @Override
     public void deleteAllInBatch() {
 
     }
 
-    @Transactional
     @Override
     public T getById(ID id) {
         return this.findById(id).orElseThrow();

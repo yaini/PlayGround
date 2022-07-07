@@ -13,8 +13,8 @@ public class SimpleController {
     private final SimpleService service;
 
     @GetMapping
-    public String hello() {
-        return "hello";
+    public Simple read(@RequestParam final String name) {
+        return service.findByName(name);
     }
 
     @GetMapping("{id}")

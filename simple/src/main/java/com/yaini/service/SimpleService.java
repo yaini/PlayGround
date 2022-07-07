@@ -16,6 +16,12 @@ public class SimpleService {
 
     private final SimpleRepository repository;
 
+    public Simple findByName(final String name) {
+        return repository.findByName(name)
+                .map(SimpleEntityConverter::to)
+                .orElseThrow();
+    }
+
     public Simple findOne(final Long id) {
         return SimpleEntityConverter.to(repository.getById(id));
     }
