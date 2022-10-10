@@ -1,7 +1,7 @@
 plugins {
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
-    id 'java'
+	id 'org.springframework.boot'
+	id 'io.spring.dependency-management'
+	id 'java'
 }
 
 group 'com.yaini'
@@ -11,34 +11,34 @@ bootJar.enabled(true)
 jar.enabled(false)
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 ext{
-    apachePoiVersion = "5.2.2"
-    batchExcelVersion = "0.1.1"
-    hibernateValidatorVersion = "7.0.4.Final"
-    elVersion = '3.0.0'
+	apachePoiVersion = "5.2.2"
+	batchExcelVersion = "0.1.1"
+	hibernateValidatorVersion = "7.0.4.Final"
+	elVersion = '3.0.0'
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-batch")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.apache.poi:poi-ooxml:${apachePoiVersion}")
-    implementation("org.springframework.batch.extensions:spring-batch-excel:${batchExcelVersion}")
-    implementation("org.hibernate:hibernate-validator:${hibernateValidatorVersion}")
-    implementation("javax.el:javax.el-api:${elVersion}")
-    implementation("org.glassfish:javax.el:${elVersion}")
+	implementation("org.springframework.boot:spring-boot-starter-batch")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.apache.poi:poi-ooxml:${apachePoiVersion}")
+	implementation("org.springframework.batch.extensions:spring-batch-excel:${batchExcelVersion}")
+	implementation("org.hibernate:hibernate-validator:${hibernateValidatorVersion}")
+	implementation("javax.el:javax.el-api:${elVersion}")
+	implementation("org.glassfish:javax.el:${elVersion}")
 
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
+	compileOnly("org.projectlombok:lombok")
+	annotationProcessor("org.projectlombok:lombok")
 
-    runtimeOnly("mysql:mysql-connector-java")
+	runtimeOnly("mysql:mysql-connector-java")
 
-    implementation("org.springframework.boot:spring-boot-starter-test")
+	implementation("org.springframework.boot:spring-boot-starter-test")
 
 }
 
 test {
-    useJUnitPlatform()
+	useJUnitPlatform()
 }

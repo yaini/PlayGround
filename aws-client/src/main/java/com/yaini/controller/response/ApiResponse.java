@@ -8,14 +8,14 @@ import lombok.Getter;
 @Builder
 public class ApiResponse<T> {
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final String message;
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  private final String message;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final T data;
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  private final T data;
 
-    public ApiResponse(final String message, final T data) {
-        this.message = message;
-        this.data = data;
-    }
+  public ApiResponse(final String message, final T data) {
+    this.message = message;
+    this.data = data;
+  }
 }

@@ -9,19 +9,19 @@ import javax.validation.ValidatorFactory;
 
 public abstract class SelfValidatable<T> {
 
-	private final Validator validator;
+  private final Validator validator;
 
-	public SelfValidatable() {
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		validator = factory.getValidator();
-	}
+  public SelfValidatable() {
+    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    validator = factory.getValidator();
+  }
 
-	protected abstract T validate();
+  protected abstract T validate();
 
-	protected void validateSelf(T object) {
-		Set<ConstraintViolation<T>> violations = validator.validate(object);
-		if (!violations.isEmpty()) {
-			throw new ConstraintViolationException(violations);
-		}
-	}
+  protected void validateSelf(T object) {
+    Set<ConstraintViolation<T>> violations = validator.validate(object);
+    if (!violations.isEmpty()) {
+      throw new ConstraintViolationException(violations);
+    }
+  }
 }

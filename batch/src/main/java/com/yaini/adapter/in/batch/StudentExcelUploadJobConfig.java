@@ -24,44 +24,49 @@ import org.springframework.core.io.ClassPathResource;
 @Configuration
 public class StudentExcelUploadJobConfig {
 
-    private static final String PROPERTY_EXCEL_SOURCE_FILE_PATH = "excel.to.database.job.source.file.path";
+  private static final String PROPERTY_EXCEL_SOURCE_FILE_PATH =
+      "excel.to.database.job.source.file.path";
 
-    private final StudentProcessor studentProcessor;
-    private final StudentWriter studentWriter;
+  private final StudentProcessor studentProcessor;
+  private final StudentWriter studentWriter;
 
-    @Bean
-    ItemReader<StudentReadItem> excelStudentReader(Environment environment) {
-        PoiItemReader<StudentReadItem> reader = new PoiItemReader<>();
-        reader.setLinesToSkip(1);
-        reader.setResource(new ClassPathResource(environment.getRequiredProperty(PROPERTY_EXCEL_SOURCE_FILE_PATH)));
-        reader.setRowMapper(excelRowMapper());
-        return reader;
-    }
+  @Bean
+  ItemReader<StudentReadItem> excelStudentReader(Environment environment) {
+    PoiItemReader<StudentReadItem> reader = new PoiItemReader<>();
+    reader.setLinesToSkip(1);
+    reader.setResource(
+        new ClassPathResource(environment.getRequiredProperty(PROPERTY_EXCEL_SOURCE_FILE_PATH)));
+    reader.setRowMapper(excelRowMapper());
+    return reader;
+  }
 
-    private RowMapper<StudentReadItem> excelRowMapper() {
-        BeanWrapperRowMapper<StudentReadItem> rowMapper = new BeanWrapperRowMapper<>();
-        rowMapper.setTargetType(StudentReadItem.class);
-        return rowMapper;
-    }
+  private RowMapper<StudentReadItem> excelRowMapper() {
+    BeanWrapperRowMapper<StudentReadItem> rowMapper = new BeanWrapperRowMapper<>();
+    rowMapper.setTargetType(StudentReadItem.class);
+    return rowMapper;
+  }
 
-    @Bean
-    Step excelFileToDatabaseStep(ItemReader<StudentReadItem> excelStudentReader,
-                                 StepBuilderFactory stepBuilderFactory) {
-        return stepBuilderFactory.get("excelFileToDatabaseStep")
-                .<StudentReadItem, StudentWriteItem>chunk(100)
-                .reader(excelStudentReader)
-                .processor(studentProcessor)
-                .writer(studentWriter)
-                .build();
-    }
+  @Bean
+  Step excelFileToDatabaseStep(
+      ItemReader<StudentReadItem> excelStudentReader, StepBuilderFactory stepBuilderFactory) {
+    return stepBuilderFactory
+        .get("excelFileToDatabaseStep")
+        .<StudentReadItem, StudentWriteItem>chunk(100)
+        .reader(excelStudentReader)
+        .processor(studentProcessor)
+        .writer(studentWriter)
+        .build();
+  }
 
-    @Bean
-    Job excelFileToDatabaseJob(JobBuilderFactory jobBuilderFactory,
-                               @Qualifier("excelFileToDatabaseStep") Step excelStudentStep) {
-        return jobBuilderFactory.get("excelFileToDatabaseJob")
-                .incrementer(new RunIdIncrementer())
-                .flow(excelStudentStep)
-                .end()
-                .build();
-    }
+  @Bean
+  Job excelFileToDatabaseJob(
+      JobBuilderFactory jobBuilderFactory,
+      @Qualifier("excelFileToDatabaseStep") Step excelStudentStep) {
+    return jobBuilderFactory
+        .get("excelFileToDatabaseJob")
+        .incrementer(new RunIdIncrementer())
+        .flow(excelStudentStep)
+        .end()
+        .build();
+  }
 }

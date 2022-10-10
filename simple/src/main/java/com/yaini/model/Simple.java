@@ -10,6 +10,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class Simple {
-    private Long id;
-    private String name;
+  private Long id;
+  private String name;
 }

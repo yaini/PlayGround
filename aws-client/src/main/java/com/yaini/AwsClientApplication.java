@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class AwsClientApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(AwsClientApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(AwsClientApplication.class, args);
+  }
 }

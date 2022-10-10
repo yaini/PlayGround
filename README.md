@@ -14,7 +14,7 @@
 
 ### [SPRING-9 JPA](https://github.com/yaini/PlayGround/tree/spring-9-jpa)
 
-### [SPRING-10 Bechmark](https://github.com/yaini/PlayGround/tree/spring-10-benchmark)
+### [SPRING-10 Benchmark](https://github.com/yaini/PlayGround/tree/spring-10-benchmark)
 
 ### [SPRING-11 Docker](https://github.com/yaini/PlayGround/tree/spring-11-docker)
 
@@ -26,3 +26,6 @@
 
 ### [SPRING-17 Spring Batch](https://github.com/yaini/PlayGround/tree/spring-17-batch)
 
+### [SPRING-19 QueryDsl - transform](https://github.com/yaini/PlayGround/tree/spring-19-querydsl)
+
+### [SPRING-21 CheckStyle And Formatter](https://github.com/yaini/PlayGround/tree/spring-21-apply-lint)

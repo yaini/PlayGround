@@ -1,21 +1,40 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.0'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'me.champeau.jmh' version '0.6.6'
-    id 'java'
+	id 'org.springframework.boot' version '2.7.0'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'me.champeau.jmh' version '0.6.6'
+	id "com.diffplug.spotless" version "6.11.0"
+	id 'java'
 }
 
 group = 'com.yaini'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
 
 repositories {
-    mavenCentral()
+	mavenCentral()
+}
+
+allprojects {
+	apply plugin: "com.diffplug.spotless"
+
+	spotless {
+		format 'misc', {
+			target '*.gradle', '*.md', '.gitignore'
+
+			trimTrailingWhitespace()
+			indentWithTabs()
+			endWithNewline()
+		}
+
+		java {
+			googleJavaFormat()
+			formatAnnotations()
+		}
+	}
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

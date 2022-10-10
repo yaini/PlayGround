@@ -4,13 +4,12 @@ import com.yaini.domain.model.Student;
 import com.yaini.domain.query.GetStudentQuery;
 import com.yaini.port.in.GetStudentUseCase;
 import com.yaini.port.out.StudentDataProvider;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-
-import javax.validation.Valid;
 
 @Slf4j
 @Validated
@@ -19,10 +18,10 @@ import javax.validation.Valid;
 @Service
 public class GetStudentService implements GetStudentUseCase {
 
-    private final StudentDataProvider dataProvider;
+  private final StudentDataProvider dataProvider;
 
-    @Override
-    public Student execute(final @Valid GetStudentQuery query) {
-        return dataProvider.findByStudentNumber(query.getStudentNumber()).orElse(new Student());
-    }
+  @Override
+  public Student execute(final @Valid GetStudentQuery query) {
+    return dataProvider.findByStudentNumber(query.getStudentNumber()).orElse(new Student());
+  }
 }

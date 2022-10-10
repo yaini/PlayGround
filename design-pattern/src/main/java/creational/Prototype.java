@@ -4,47 +4,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Prototype {
-    public static void main(String[] args){
-        MoneyFactory moneyFactory = new MoneyFactory(new Coin(100));
+  public static void main(String[] args) {
+    MoneyFactory moneyFactory = new MoneyFactory(new Coin(100));
 
-        List<Money> wallet = new ArrayList<>();
-        for( int i=0; i<10; i++ ){
-            wallet.add(moneyFactory.makeMoney());
-        }
+    List<Money> wallet = new ArrayList<>();
+    for (int i = 0; i < 10; i++) {
+      wallet.add(moneyFactory.makeMoney());
     }
+  }
 }
 
-class Money implements Cloneable{
-    int price;
+class Money implements Cloneable {
+  int price;
 
-    public Object clone() {
-        try {
-            Money copy = (Money) super.clone();
-            return copy;
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-            return null;
-        }
+  public Object clone() {
+    try {
+      Money copy = (Money) super.clone();
+      return copy;
+    } catch (CloneNotSupportedException e) {
+      e.printStackTrace();
+      return null;
     }
+  }
 }
 
-class Coin extends Money{
+class Coin extends Money {
 
-    Coin(int price){
-        this.price = price;
-    }
+  Coin(int price) {
+    this.price = price;
+  }
 }
 
-class MoneyFactory{
+class MoneyFactory {
 
-    private Money money;
+  private Money money;
 
-    public MoneyFactory(Money money){
-        this.money = money;
-    }
+  public MoneyFactory(Money money) {
+    this.money = money;
+  }
 
-    public Money makeMoney(){
-        return (Money) money.clone();
-    }
-
+  public Money makeMoney() {
+    return (Money) money.clone();
+  }
 }

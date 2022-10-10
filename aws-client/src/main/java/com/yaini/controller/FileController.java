@@ -13,15 +13,15 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class FileController {
 
-    private final FileService fileService;
+  private final FileService fileService;
 
-    @GetMapping("/download")
-    public ResponseEntity<byte[]> download(final @RequestParam String fileName) {
-        return ApiResponseGenerator.of(fileService.download(fileName), fileName);
-    }
+  @GetMapping("/download")
+  public ResponseEntity<byte[]> download(final @RequestParam String fileName) {
+    return ApiResponseGenerator.of(fileService.download(fileName), fileName);
+  }
 
-    @PostMapping("/upload")
-    public ApiResponse<String> upload(@RequestParam("file") MultipartFile file) {
-        return ApiResponseGenerator.of(fileService.upload(file));
-    }
+  @PostMapping("/upload")
+  public ApiResponse<String> upload(@RequestParam("file") MultipartFile file) {
+    return ApiResponseGenerator.of(fileService.upload(file));
+  }
 }
