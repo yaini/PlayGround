@@ -2,77 +2,79 @@ package creational;
 
 public class FactoryMethod {
 
-    public static void main(String[] args){
+  public static void main(String[] args) {
 
-        Bank bank = new Bank();
+    Bank bank = new Bank();
 
-        Account saveAccount = bank.createAccount(AccountType.SAVE, "yaini");
-        saveAccount.deposit(100);
+    Account saveAccount = bank.createAccount(AccountType.SAVE, "yaini");
+    saveAccount.deposit(100);
 
-        CheckingAccount checkAccount = (CheckingAccount) bank.createAccount(AccountType.CHECK, "yaini");
-        checkAccount.withdraw(100);
-
-    }
+    CheckingAccount checkAccount = (CheckingAccount) bank.createAccount(AccountType.CHECK, "yaini");
+    checkAccount.withdraw(100);
+  }
 }
 
-enum AccountType { SAVE, CHECK }
-
-class Bank extends AccountFactory{
-
-    @Override
-    protected Account createAccount(AccountType type, String holder) {
-        switch ( type ){
-            case SAVE:
-                return new SavingAccount(holder);
-            case CHECK:
-                return new CheckingAccount(holder);
-            default:
-                throw new RuntimeException("Invalid Type");
-        }
-    }
+enum AccountType {
+  SAVE,
+  CHECK
 }
 
-abstract class AccountFactory{
+class Bank extends AccountFactory {
 
-    protected abstract Account createAccount(AccountType type, String holder);
-
+  @Override
+  protected Account createAccount(AccountType type, String holder) {
+    switch (type) {
+      case SAVE:
+        return new SavingAccount(holder);
+      case CHECK:
+        return new CheckingAccount(holder);
+      default:
+        throw new RuntimeException("Invalid Type");
+    }
+  }
 }
 
-abstract class Account{
+abstract class AccountFactory {
 
-    public String holder;
-    public int balance;
-    public abstract void deposit(int money);
-
-    public Account(String holder){
-        this.holder = holder;
-    }
+  protected abstract Account createAccount(AccountType type, String holder);
 }
 
-class SavingAccount extends Account{
+abstract class Account {
 
-    public SavingAccount(String holder) {
-        super(holder);
-    }
+  public String holder;
+  public int balance;
 
-    @Override
-    public void deposit(int money) {
-        this.balance += money;
-    }
+  public abstract void deposit(int money);
+
+  public Account(String holder) {
+    this.holder = holder;
+  }
 }
 
-class CheckingAccount extends Account{
+class SavingAccount extends Account {
 
-    public CheckingAccount(String holder) {
-        super(holder);
-    }
+  public SavingAccount(String holder) {
+    super(holder);
+  }
 
-    @Override
-    public void deposit(int money) {
-        this.balance -= money;
-    }
+  @Override
+  public void deposit(int money) {
+    this.balance += money;
+  }
+}
 
-    public void withdraw(int money){
-        this.balance -= money;
-    }
+class CheckingAccount extends Account {
+
+  public CheckingAccount(String holder) {
+    super(holder);
+  }
+
+  @Override
+  public void deposit(int money) {
+    this.balance -= money;
+  }
+
+  public void withdraw(int money) {
+    this.balance -= money;
+  }
 }

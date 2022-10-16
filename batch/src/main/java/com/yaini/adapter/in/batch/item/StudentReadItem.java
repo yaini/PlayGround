@@ -9,9 +9,9 @@ import lombok.*;
 @Setter
 @Getter
 public class StudentReadItem {
-    private String studentNumber;
-    private String name;
-    private String gender;
-    private String graduation;
-    private String admission;
+  private String studentNumber;
+  private String name;
+  private String gender;
+  private String graduation;
+  private String admission;
 }

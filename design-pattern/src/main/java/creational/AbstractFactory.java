@@ -2,63 +2,58 @@ package creational;
 
 public class AbstractFactory {
 
-    public static void main(String[] args){
-        Card creditCard = CardFactory.getCreditCard(new HyundaiCardFactory());
-        Card debitCard = CardFactory.getDebitCard(new KBCardFactory());
-    }
-
+  public static void main(String[] args) {
+    Card creditCard = CardFactory.getCreditCard(new HyundaiCardFactory());
+    Card debitCard = CardFactory.getDebitCard(new KBCardFactory());
+  }
 }
 
-interface CardAbstractFactory{
-    Card createCreditCard();
-    Card createDebitCard();
+interface CardAbstractFactory {
+  Card createCreditCard();
+
+  Card createDebitCard();
 }
 
-class HyundaiCardFactory implements CardAbstractFactory{
+class HyundaiCardFactory implements CardAbstractFactory {
 
-    @Override
-    public Card createCreditCard() {
-        return new CreditCard();
-    }
+  @Override
+  public Card createCreditCard() {
+    return new CreditCard();
+  }
 
-    @Override
-    public Card createDebitCard() {
-        return new DebitCard();
-    }
-
+  @Override
+  public Card createDebitCard() {
+    return new DebitCard();
+  }
 }
 
-class KBCardFactory implements CardAbstractFactory{
+class KBCardFactory implements CardAbstractFactory {
 
-    @Override
-    public Card createCreditCard() {
-        return new CreditCard();
-    }
+  @Override
+  public Card createCreditCard() {
+    return new CreditCard();
+  }
 
-    @Override
-    public Card createDebitCard() {
-        return new DebitCard();
-    }
-
+  @Override
+  public Card createDebitCard() {
+    return new DebitCard();
+  }
 }
 
-class CardFactory{
-    static public Card getCreditCard(CardAbstractFactory cardFactory){
-        return cardFactory.createCreditCard();
-    }
-    static public Card getDebitCard(CardAbstractFactory cardFactory){
-        return cardFactory.createDebitCard();
-    }
+class CardFactory {
+  public static Card getCreditCard(CardAbstractFactory cardFactory) {
+    return cardFactory.createCreditCard();
+  }
+
+  public static Card getDebitCard(CardAbstractFactory cardFactory) {
+    return cardFactory.createDebitCard();
+  }
 }
 
-class DebitCard extends Card{
+class DebitCard extends Card {}
 
-}
+class CreditCard extends Card {}
 
-class CreditCard extends Card{
-
-}
-
-abstract class Card{
-    int payment;
+abstract class Card {
+  int payment;
 }
