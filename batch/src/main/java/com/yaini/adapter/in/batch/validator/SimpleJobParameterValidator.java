@@ -6,11 +6,11 @@ import org.springframework.batch.core.JobParametersValidator;
 
 public class SimpleJobParameterValidator implements JobParametersValidator {
 
-	@Override
-	public void validate(final JobParameters parameters) throws JobParametersInvalidException {
+  @Override
+  public void validate(final JobParameters parameters) throws JobParametersInvalidException {
 
-		if( parameters == null ){
-			throw new JobParametersInvalidException("jobParameters is null");
-		}
-	}
+    if (parameters == null) {
+      throw new JobParametersInvalidException("jobParameters is null");
+    }
+  }
 }
