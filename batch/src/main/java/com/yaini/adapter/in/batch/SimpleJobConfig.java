@@ -1,6 +1,7 @@
 package com.yaini.adapter.in.batch;
 
 import com.yaini.adapter.in.batch.incrementer.SimpleJobParametersIncrementer;
+import com.yaini.adapter.in.batch.tasklet.SimpleJobTasklet;
 import com.yaini.adapter.in.batch.validator.SimpleJobParameterValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -15,14 +16,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SimpleJobConfig {
 
+  public static final String JOB_NAME = "SIMPLE_JOB";
+
   private final JobBuilderFactory jobBuilderFactory;
   private final StepBuilderFactory stepBuilderFactory;
 
-  @Bean
+  @Bean(JOB_NAME)
   public Job batchJob() {
 
     return jobBuilderFactory
-        .get("batchJob")
+        .get(JOB_NAME)
         .start(startStep())
         .next(nextStep())
         .validator(new SimpleJobParameterValidator())
@@ -35,10 +38,7 @@ public class SimpleJobConfig {
   @Bean
   public Step startStep() {
 
-    return stepBuilderFactory
-        .get("startStep")
-        .tasklet(((contribution, chunkContext) -> RepeatStatus.FINISHED))
-        .build();
+    return stepBuilderFactory.get("startStep").tasklet(new SimpleJobTasklet()).build();
   }
 
   @Bean
