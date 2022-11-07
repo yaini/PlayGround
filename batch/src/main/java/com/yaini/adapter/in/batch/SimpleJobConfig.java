@@ -38,7 +38,11 @@ public class SimpleJobConfig {
   @Bean
   public Step startStep() {
 
-    return stepBuilderFactory.get("startStep").tasklet(new SimpleJobTasklet()).build();
+    return stepBuilderFactory.get("startStep")
+            .tasklet(new SimpleJobTasklet())
+            .startLimit(10)
+            .allowStartIfComplete(true)
+            .build();
   }
 
   @Bean
