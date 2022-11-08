@@ -1,22 +1,22 @@
 package com.yaini.adapter.in.batch;
 
-import com.yaini.adapter.in.batch.incrementer.SimpleJobParametersIncrementer;
 import com.yaini.adapter.in.batch.tasklet.SimpleJobTasklet;
-import com.yaini.adapter.in.batch.validator.SimpleJobParameterValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.FlowBuilder;
+import org.springframework.batch.core.job.flow.Flow;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @RequiredArgsConstructor
 @Configuration
-public class SimpleJobConfig {
+public class FlowJobConfig {
 
-  public static final String JOB_NAME = "SIMPLE_JOB";
+  public static final String JOB_NAME = "FLOW_JOB";
 
   private final JobBuilderFactory jobBuilderFactory;
   private final StepBuilderFactory stepBuilderFactory;
@@ -24,15 +24,13 @@ public class SimpleJobConfig {
   @Bean(JOB_NAME)
   public Job batchJob() {
 
-    return jobBuilderFactory
-        .get(JOB_NAME)
-        .start(startStep())
-        .next(nextStep())
-        .validator(new SimpleJobParameterValidator())
-        // .validator(new DefaultJobParametersValidator(new String[]{"name"}, new String[]{"type"}))
-        // .preventRestart()
-        .incrementer(new SimpleJobParametersIncrementer())
-        .build();
+    return jobBuilderFactory.get(JOB_NAME).start(startFlow()).end().build();
+  }
+
+  public Flow startFlow() {
+    FlowBuilder<Flow> flowJobBuilder = new FlowBuilder<>("startFlow");
+
+    return flowJobBuilder.start(startStep()).next(nextStep()).end();
   }
 
   @Bean
