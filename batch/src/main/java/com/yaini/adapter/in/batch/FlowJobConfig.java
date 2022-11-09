@@ -6,8 +6,6 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.job.builder.FlowBuilder;
-import org.springframework.batch.core.job.flow.Flow;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,13 +22,21 @@ public class FlowJobConfig {
   @Bean(JOB_NAME)
   public Job batchJob() {
 
-    return jobBuilderFactory.get(JOB_NAME).start(startFlow()).end().build();
-  }
-
-  public Flow startFlow() {
-    FlowBuilder<Flow> flowJobBuilder = new FlowBuilder<>("startFlow");
-
-    return flowJobBuilder.start(startStep()).next(nextStep()).end();
+    return jobBuilderFactory
+        .get(JOB_NAME)
+        .start(startStep())
+        .on("FAILED")
+        .to(toStep())
+        .on("*")
+        .stop()
+        .from(startStep())
+        .on("*")
+        .to(toStep())
+        .next(nextStep())
+        .on("FAILED")
+        .end()
+        .end()
+        .build();
   }
 
   @Bean
@@ -41,6 +47,15 @@ public class FlowJobConfig {
         .tasklet(new SimpleJobTasklet())
         .startLimit(10)
         .allowStartIfComplete(true)
+        .build();
+  }
+
+  @Bean
+  public Step toStep() {
+
+    return stepBuilderFactory
+        .get("toStep")
+        .tasklet(((contribution, chunkContext) -> RepeatStatus.FINISHED))
         .build();
   }
 
