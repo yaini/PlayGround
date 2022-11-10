@@ -1,5 +1,6 @@
 package com.yaini.adapter.in.batch;
 
+import com.yaini.adapter.in.batch.listener.PassCheckingListener;
 import com.yaini.adapter.in.batch.tasklet.SimpleJobTasklet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -27,7 +28,7 @@ public class FlowJobConfig {
         .start(startStep())
         .on("FAILED")
         .to(toStep())
-        .on("*")
+        .on("PASS")
         .stop()
         .from(startStep())
         .on("*")
@@ -56,6 +57,7 @@ public class FlowJobConfig {
     return stepBuilderFactory
         .get("toStep")
         .tasklet(((contribution, chunkContext) -> RepeatStatus.FINISHED))
+        .listener(new PassCheckingListener())
         .build();
   }
 
