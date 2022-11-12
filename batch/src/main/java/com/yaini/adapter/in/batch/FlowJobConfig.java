@@ -25,15 +25,15 @@ public class FlowJobConfig {
 
     return jobBuilderFactory
         .get(JOB_NAME)
-        .start(startStep())
+        .start(flowStartStep())
         .on("FAILED")
-        .to(toStep())
+        .to(flowToStep())
         .on("PASS")
         .stop()
-        .from(startStep())
+        .from(flowStartStep())
         .on("*")
-        .to(toStep())
-        .next(nextStep())
+        .to(flowToStep())
+        .next(flowNextStep())
         .on("FAILED")
         .end()
         .end()
@@ -41,10 +41,10 @@ public class FlowJobConfig {
   }
 
   @Bean
-  public Step startStep() {
+  public Step flowStartStep() {
 
     return stepBuilderFactory
-        .get("startStep")
+        .get("flowStartStep")
         .tasklet(new SimpleJobTasklet())
         .startLimit(10)
         .allowStartIfComplete(true)
@@ -52,20 +52,20 @@ public class FlowJobConfig {
   }
 
   @Bean
-  public Step toStep() {
+  public Step flowToStep() {
 
     return stepBuilderFactory
-        .get("toStep")
+        .get("flowToStep")
         .tasklet(((contribution, chunkContext) -> RepeatStatus.FINISHED))
         .listener(new PassCheckingListener())
         .build();
   }
 
   @Bean
-  public Step nextStep() {
+  public Step flowNextStep() {
 
     return stepBuilderFactory
-        .get("nextStep")
+        .get("flowNextStep")
         .tasklet(((contribution, chunkContext) -> RepeatStatus.FINISHED))
         .build();
   }

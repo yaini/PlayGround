@@ -4,14 +4,18 @@ import com.yaini.adapter.in.batch.incrementer.SimpleJobParametersIncrementer;
 import com.yaini.adapter.in.batch.tasklet.SimpleJobTasklet;
 import com.yaini.adapter.in.batch.validator.SimpleJobParameterValidator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@Slf4j
 @RequiredArgsConstructor
 @Configuration
 public class SimpleJobConfig {
@@ -26,7 +30,7 @@ public class SimpleJobConfig {
 
     return jobBuilderFactory
         .get(JOB_NAME)
-        .start(startStep())
+        .start(startStep("scopeTest"))
         .next(nextStep())
         .validator(new SimpleJobParameterValidator())
         // .validator(new DefaultJobParametersValidator(new String[]{"name"}, new String[]{"type"}))
@@ -36,7 +40,10 @@ public class SimpleJobConfig {
   }
 
   @Bean
-  public Step startStep() {
+  @JobScope
+  public Step startStep(@Value("#{jobParameters['jobScopeString']}") String jobScopeString) {
+
+    log.info("jobScopeString = {}", jobScopeString);
 
     return stepBuilderFactory
         .get("startStep")
