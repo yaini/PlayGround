@@ -26,14 +26,14 @@ public class JdbcCursorConfig {
   @Bean(JOB_NAME)
   public Job batchJob() {
 
-    return jobBuilderFactory.get(JOB_NAME).start(jdbcStep()).build();
+    return jobBuilderFactory.get(JOB_NAME).start(jdbcCursorStep()).build();
   }
 
   @Bean
-  public Step jdbcStep() {
+  public Step jdbcCursorStep() {
 
     return stepBuilderFactory
-        .get("jdbcStep")
+        .get("jdbcCursorStep")
         .chunk(CHUNK_SIZE)
         .reader(jdbcCursorItemReader())
         .build();
