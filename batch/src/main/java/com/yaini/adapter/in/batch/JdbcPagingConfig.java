@@ -48,7 +48,7 @@ public class JdbcPagingConfig {
     JdbcPagingItemReader<CustomerItem> reader = new JdbcPagingItemReader<>();
 
     reader.setDataSource(this.dataSource);
-	reader.setPageSize(CHUNK_SIZE);
+    reader.setPageSize(CHUNK_SIZE);
     reader.setRowMapper(new BeanPropertyRowMapper<>(CustomerItem.class));
 
     MySqlPagingQueryProvider provider = new MySqlPagingQueryProvider();
