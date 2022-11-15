@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 @RequiredArgsConstructor
 @Configuration
@@ -86,7 +87,7 @@ public class PartitionJobConfig {
 
     reader.setDataSource(this.dataSource);
     reader.setFetchSize(1000);
-    reader.setRowMapper(new ColumnRowMapper());
+    reader.setRowMapper(new BeanPropertyRowMapper<>(CustomerItem.class));
 
     MySqlPagingQueryProvider provider = new MySqlPagingQueryProvider();
     provider.setSelectClause("id, name, birth");
@@ -107,7 +108,8 @@ public class PartitionJobConfig {
 
     itemWriter.setDataSource(this.dataSource);
     itemWriter.setSql("insert into customer_copy values (:id, :name, :birth)");
-    itemWriter.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider());
+    itemWriter.setItemSqlParameterSourceProvider(
+        new BeanPropertyItemSqlParameterSourceProvider<>());
     itemWriter.afterPropertiesSet();
 
     return itemWriter;
