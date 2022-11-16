@@ -9,6 +9,8 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.database.JdbcBatchItemWriter;
+import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.batch.item.support.ListItemWriter;
 import org.springframework.context.annotation.Bean;
@@ -36,9 +38,9 @@ public class JdbcCursorConfig {
 
     return stepBuilderFactory
         .get("jdbcCursorStep")
-        .chunk(CHUNK_SIZE)
+        .<CustomerItem, CustomerItem>chunk(CHUNK_SIZE)
         .reader(jdbcCursorItemReader())
-        .writer(tempJdbcCursorWriter())
+        .writer(jdbcBatchItemWriter())
         .build();
   }
 
@@ -55,8 +57,12 @@ public class JdbcCursorConfig {
   }
 
   @Bean
-  public ItemWriter<Object> tempJdbcCursorWriter() {
+  public ItemWriter<CustomerItem> jdbcBatchItemWriter() {
 
-    return new ListItemWriter<>();
+    return new JdbcBatchItemWriterBuilder<CustomerItem>()
+            .dataSource(this.dataSource)
+            .sql("INSERT INTO customer_copy VALUES (:id, :name, :date)")
+            .beanMapped()
+            .build();
   }
 }
