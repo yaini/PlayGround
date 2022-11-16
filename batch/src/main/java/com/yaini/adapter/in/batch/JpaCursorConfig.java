@@ -12,7 +12,9 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JpaCursorItemReaderBuilder;
+import org.springframework.batch.item.database.builder.JpaItemWriterBuilder;
 import org.springframework.batch.item.support.ListItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +29,6 @@ public class JpaCursorConfig {
   private final JobBuilderFactory jobBuilderFactory;
   private final StepBuilderFactory stepBuilderFactory;
   private final EntityManagerFactory entityManagerFactory;
-  private final DataSource dataSource;
 
   @Bean(JOB_NAME)
   public Job batchJob() {
@@ -40,9 +41,9 @@ public class JpaCursorConfig {
 
     return stepBuilderFactory
         .get("jpaStep")
-        .chunk(CHUNK_SIZE)
+        .<CustomerItem, CustomerItem>chunk(CHUNK_SIZE)
         .reader(jpaCursorItemReader())
-        .writer(tempJpaCursorWriter())
+        .writer(jpaItemWriter())
         .build();
   }
 
@@ -61,8 +62,11 @@ public class JpaCursorConfig {
   }
 
   @Bean
-  public ItemWriter<Object> tempJpaCursorWriter() {
+  public ItemWriter<CustomerItem> jpaItemWriter() {
 
-    return new ListItemWriter<>();
+    return new JpaItemWriterBuilder<CustomerItem>()
+            .usePersist(true)
+            .entityManagerFactory(this.entityManagerFactory)
+            .build();
   }
 }
