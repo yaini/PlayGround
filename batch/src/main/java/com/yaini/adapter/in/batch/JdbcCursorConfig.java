@@ -8,7 +8,9 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
+import org.springframework.batch.item.support.ListItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,6 +38,7 @@ public class JdbcCursorConfig {
         .get("jdbcCursorStep")
         .chunk(CHUNK_SIZE)
         .reader(jdbcCursorItemReader())
+        .writer(tempJdbcCursorWriter())
         .build();
   }
 
@@ -49,5 +52,11 @@ public class JdbcCursorConfig {
         .beanRowMapper(CustomerItem.class)
         .dataSource(this.dataSource)
         .build();
+  }
+
+  @Bean
+  public ItemWriter<Object> tempJdbcCursorWriter() {
+
+    return new ListItemWriter<>();
   }
 }

@@ -11,7 +11,9 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.builder.JpaCursorItemReaderBuilder;
+import org.springframework.batch.item.support.ListItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -40,6 +42,7 @@ public class JpaCursorConfig {
         .get("jpaStep")
         .chunk(CHUNK_SIZE)
         .reader(jpaCursorItemReader())
+        .writer(tempJpaCursorWriter())
         .build();
   }
 
@@ -55,5 +58,11 @@ public class JpaCursorConfig {
         .queryString("select c from customer c where name like :name")
         .parameterValues(parameters)
         .build();
+  }
+
+  @Bean
+  public ItemWriter<Object> tempJpaCursorWriter() {
+
+    return new ListItemWriter<>();
   }
 }

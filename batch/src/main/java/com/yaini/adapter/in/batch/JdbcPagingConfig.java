@@ -9,9 +9,11 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.support.MySqlPagingQueryProvider;
+import org.springframework.batch.item.support.ListItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -40,6 +42,7 @@ public class JdbcPagingConfig {
         .get("jdbcPagingStep")
         .chunk(CHUNK_SIZE)
         .reader(jdbcPagingItemReader())
+        .writer(tempJdbcPagingWriter())
         .build();
   }
 
@@ -59,7 +62,14 @@ public class JdbcPagingConfig {
     sortKey.put("id", Order.ASCENDING);
 
     provider.setSortKeys(sortKey);
+    reader.setQueryProvider(provider);
 
     return reader;
+  }
+
+  @Bean
+  public ItemWriter<Object> tempJdbcPagingWriter() {
+
+    return new ListItemWriter<>();
   }
 }

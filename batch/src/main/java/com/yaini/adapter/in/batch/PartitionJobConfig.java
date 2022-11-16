@@ -92,12 +92,13 @@ public class PartitionJobConfig {
     MySqlPagingQueryProvider provider = new MySqlPagingQueryProvider();
     provider.setSelectClause("id, name, birth");
     provider.setFromClause("from customer");
-    provider.setWhereClause("where id >= " + minValue + "and id < " + maxValue);
+    provider.setWhereClause("where id >= " + minValue + " and id < " + maxValue);
 
     Map<String, Order> sortKey = new HashMap<>(1);
     sortKey.put("id", Order.ASCENDING);
 
     provider.setSortKeys(sortKey);
+    reader.setQueryProvider(provider);
 
     return reader;
   }
