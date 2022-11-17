@@ -9,10 +9,8 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
-import org.springframework.batch.item.support.ListItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -60,9 +58,9 @@ public class JdbcCursorConfig {
   public ItemWriter<CustomerItem> jdbcBatchItemWriter() {
 
     return new JdbcBatchItemWriterBuilder<CustomerItem>()
-            .dataSource(this.dataSource)
-            .sql("INSERT INTO customer_copy VALUES (:id, :name, :date)")
-            .beanMapped()
-            .build();
+        .dataSource(this.dataSource)
+        .sql("INSERT INTO customer_copy VALUES (:id, :name, :date)")
+        .beanMapped()
+        .build();
   }
 }

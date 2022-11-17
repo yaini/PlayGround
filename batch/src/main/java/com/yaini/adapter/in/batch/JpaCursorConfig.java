@@ -4,7 +4,6 @@ import com.yaini.adapter.in.batch.item.CustomerItem;
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -12,10 +11,8 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JpaCursorItemReaderBuilder;
 import org.springframework.batch.item.database.builder.JpaItemWriterBuilder;
-import org.springframework.batch.item.support.ListItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -65,8 +62,8 @@ public class JpaCursorConfig {
   public ItemWriter<CustomerItem> jpaItemWriter() {
 
     return new JpaItemWriterBuilder<CustomerItem>()
-            .usePersist(true)
-            .entityManagerFactory(this.entityManagerFactory)
-            .build();
+        .usePersist(true)
+        .entityManagerFactory(this.entityManagerFactory)
+        .build();
   }
 }
