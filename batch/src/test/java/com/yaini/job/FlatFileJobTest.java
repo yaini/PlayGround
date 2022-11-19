@@ -1,6 +1,7 @@
 package com.yaini.job;
 
 import com.yaini.adapter.in.batch.FlatFileJobConfig;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.BatchStatus;
@@ -26,10 +27,13 @@ public class FlatFileJobTest {
   @Autowired private JobLauncherTestUtils launcherUtils;
 
   @Test
-  public void FlatFileItemReader를_통해_데이터를_읽을_수_있다() throws Exception {
+  public void FlatFileItem_API를_통해_파일의_데이터를_읽고_쓸_수_있다() throws Exception {
     // given
     JobParameters jobParameters =
-        new JobParametersBuilder().addString("name", "flatFileTest").toJobParameters();
+        new JobParametersBuilder()
+            .addString("name", "flatFileTest")
+            .addString("date", LocalDateTime.now().toString())
+            .toJobParameters();
 
     // when
     JobExecution execution = launcherUtils.launchJob(jobParameters);
