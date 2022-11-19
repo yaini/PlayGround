@@ -18,17 +18,20 @@ ext{
 	apachePoiVersion = "5.2.2"
 	batchExcelVersion = "0.1.1"
 	hibernateValidatorVersion = "7.0.4.Final"
-	elVersion = '3.0.0'
+	elVersion = "3.0.0"
+	xstreamVersion = "1.4.16"
 }
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-batch")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework:spring-oxm")
 	implementation("org.apache.poi:poi-ooxml:${apachePoiVersion}")
 	implementation("org.springframework.batch.extensions:spring-batch-excel:${batchExcelVersion}")
 	implementation("org.hibernate:hibernate-validator:${hibernateValidatorVersion}")
 	implementation("javax.el:javax.el-api:${elVersion}")
 	implementation("org.glassfish:javax.el:${elVersion}")
+	implementation("com.thoughtworks.xstream:xstream:${xstreamVersion}")
 
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")

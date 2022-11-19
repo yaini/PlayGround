@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<customers>
+  <customer>
+    <id>1</id>
+    <name>aaa</name>
+    <birth>2022-01-02</birth>
+  </customer>
+  <customer>
+    <id>2</id>
+    <name>bbb</name>
+    <birth>2022-01-02</birth>
+  </customer>
+</customers>
