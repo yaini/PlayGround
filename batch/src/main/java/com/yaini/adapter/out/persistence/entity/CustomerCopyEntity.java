@@ -1,6 +1,6 @@
 package com.yaini.adapter.out.persistence.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,5 +27,5 @@ public class CustomerCopyEntity {
   private String name;
 
   @Column(nullable = false)
-  private LocalDateTime birth;
+  private LocalDate birth;
 }

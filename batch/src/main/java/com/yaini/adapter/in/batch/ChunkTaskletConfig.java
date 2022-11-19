@@ -4,7 +4,7 @@ import com.yaini.adapter.in.batch.item.CustomerItem;
 import com.yaini.adapter.in.batch.tasklet.chunk.processor.CustomerProcessor;
 import com.yaini.adapter.in.batch.tasklet.chunk.reader.CustomerReader;
 import com.yaini.adapter.in.batch.tasklet.chunk.writer.CustomerWriter;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -49,9 +49,9 @@ public class ChunkTaskletConfig {
   public ItemReader<CustomerItem> customerItemReader() {
 
     List<CustomerItem> items = new ArrayList<>();
-    items.add(new CustomerItem(1L, "customer1", LocalDateTime.now()));
-    items.add(new CustomerItem(2L, "customer2", LocalDateTime.now()));
-    items.add(new CustomerItem(3L, "customer3", LocalDateTime.now()));
+    items.add(new CustomerItem(1L, "customer1", LocalDate.now()));
+    items.add(new CustomerItem(2L, "customer2", LocalDate.now()));
+    items.add(new CustomerItem(3L, "customer3", LocalDate.now()));
 
     return new CustomerReader(items);
   }
