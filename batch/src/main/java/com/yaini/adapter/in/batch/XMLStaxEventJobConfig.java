@@ -13,9 +13,11 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.xml.builder.StaxEventItemReaderBuilder;
+import org.springframework.batch.item.xml.builder.StaxEventItemWriterBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 
 @Slf4j
@@ -76,6 +78,12 @@ public class XMLStaxEventJobConfig {
   @Bean
   public ItemWriter<CustomerItem> xmlFileItemWriter() {
 
-    return items -> items.forEach(item -> log.info("[xmlFileItemWriter] items :: {} ", item));
+    return new StaxEventItemWriterBuilder<CustomerItem>()
+        .name("xmlFileItemWriter")
+        .resource(new FileSystemResource(FILE_PATH + "new_" + FILE_NAME))
+        .rootTagName("customer")
+        .marshaller(itemMarshaller())
+        .overwriteOutput(true)
+        .build();
   }
 }
