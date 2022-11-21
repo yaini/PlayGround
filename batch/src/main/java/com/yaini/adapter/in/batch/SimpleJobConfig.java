@@ -1,6 +1,7 @@
 package com.yaini.adapter.in.batch;
 
 import com.yaini.adapter.in.batch.incrementer.SimpleJobParametersIncrementer;
+import com.yaini.adapter.in.batch.listener.LoggingJobExecutionListener;
 import com.yaini.adapter.in.batch.tasklet.SimpleJobTasklet;
 import com.yaini.adapter.in.batch.validator.SimpleJobParameterValidator;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ public class SimpleJobConfig {
         // .validator(new DefaultJobParametersValidator(new String[]{"name"}, new String[]{"type"}))
         // .preventRestart()
         .incrementer(new SimpleJobParametersIncrementer())
+        .listener(new LoggingJobExecutionListener())
         .build();
   }
 

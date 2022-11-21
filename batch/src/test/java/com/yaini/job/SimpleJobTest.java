@@ -1,6 +1,7 @@
 package com.yaini.job;
 
 import com.yaini.adapter.in.batch.SimpleJobConfig;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.BatchStatus;
@@ -29,7 +30,10 @@ public class SimpleJobTest {
   public void 스프링_배치_테스트를_실행할_수_있다() throws Exception {
     // given
     JobParameters jobParameters =
-        new JobParametersBuilder().addString("name", "test2").toJobParameters();
+        new JobParametersBuilder()
+            .addString("name", "simpleJobTest")
+            .addString("date", LocalDateTime.now().toString())
+            .toJobParameters();
 
     // when
     JobExecution execution = launcherUtils.launchJob(jobParameters);
