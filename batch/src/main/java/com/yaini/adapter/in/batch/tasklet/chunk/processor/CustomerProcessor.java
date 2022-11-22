@@ -14,7 +14,7 @@ public class CustomerProcessor implements ItemProcessor<CustomerItem, CustomerIt
 
     return CustomerItem.builder()
         .id(item.getId())
-        .name(item.getName())
+        .name(item.getName().toLowerCase())
         .birth(item.getBirth())
         .build();
   }

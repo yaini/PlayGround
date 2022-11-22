@@ -2,11 +2,13 @@ package com.yaini.adapter.in.batch;
 
 import com.yaini.adapter.in.batch.item.CustomerItem;
 import com.yaini.adapter.in.batch.tasklet.chunk.processor.CustomerProcessor;
+import com.yaini.adapter.in.batch.tasklet.chunk.processor.CustomerProcessorClassifier;
 import com.yaini.adapter.in.batch.tasklet.chunk.reader.CustomerReader;
 import com.yaini.adapter.in.batch.tasklet.chunk.writer.CustomerWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -15,6 +17,7 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.support.builder.ClassifierCompositeItemProcessorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -59,7 +62,12 @@ public class ChunkTaskletConfig {
   @Bean
   public ItemProcessor<CustomerItem, CustomerItem> customerItemProcessor() {
 
-    return new CustomerProcessor();
+    Map<Integer, ItemProcessor<CustomerItem, CustomerItem>> processorMap =
+        Map.of(2022, new CustomerProcessor());
+
+    return new ClassifierCompositeItemProcessorBuilder<CustomerItem, CustomerItem>()
+        .classifier(new CustomerProcessorClassifier<>(processorMap))
+        .build();
   }
 
   @Bean
