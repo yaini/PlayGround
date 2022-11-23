@@ -15,12 +15,14 @@ import org.springframework.batch.item.database.builder.JpaItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @RequiredArgsConstructor
 @Configuration
-public class JpaPagingConfig {
+public class MultiThreadJobConfig {
 
-  public static final String JOB_NAME = "JPA_PAGING_JOB";
+  public static final String JOB_NAME = "MULTI_THREAD_JOB";
   public static final int CHUNK_SIZE = 100;
 
   private final JobBuilderFactory jobBuilderFactory;
@@ -37,10 +39,11 @@ public class JpaPagingConfig {
   public Step jpaPagingStep() {
 
     return stepBuilderFactory
-        .get("jpaPagingStep")
+        .get("multiThreadStep")
         .<CustomerItem, CustomerItem>chunk(CHUNK_SIZE)
         .reader(jpaPagingItemReader())
         .writer(tempJpaPagingWriter())
+        .taskExecutor(executor())
         .build();
   }
 
@@ -51,7 +54,7 @@ public class JpaPagingConfig {
     parameters.put("name", "a%");
 
     return new JpaPagingItemReaderBuilder<CustomerItem>()
-        .name("jpaCursorItemReader")
+        .name("multiThreadJpaCursorItemReader")
         .entityManagerFactory(this.entityManagerFactory)
         .pageSize(CHUNK_SIZE)
         .queryString("select c from customer c where name like :name")
@@ -66,5 +69,16 @@ public class JpaPagingConfig {
         .usePersist(true)
         .entityManagerFactory(this.entityManagerFactory)
         .build();
+  }
+
+  @Bean
+  public TaskExecutor executor() {
+    ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+
+    taskExecutor.setCorePoolSize(4);
+    taskExecutor.setMaxPoolSize(8);
+    taskExecutor.setThreadNamePrefix("ASYNC-THREAD");
+
+    return taskExecutor;
   }
 }

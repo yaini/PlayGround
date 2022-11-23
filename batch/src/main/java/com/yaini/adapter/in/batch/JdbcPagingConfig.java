@@ -40,7 +40,7 @@ public class JdbcPagingConfig {
 
     return stepBuilderFactory
         .get("jdbcPagingStep")
-        .chunk(CHUNK_SIZE)
+        .<CustomerItem, CustomerItem>chunk(CHUNK_SIZE)
         .reader(jdbcPagingItemReader())
         .writer(tempJdbcPagingWriter())
         .build();
