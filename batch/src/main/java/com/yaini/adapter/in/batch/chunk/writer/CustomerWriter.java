@@ -1,4 +1,4 @@
-package com.yaini.adapter.in.batch.tasklet.chunk.writer;
+package com.yaini.adapter.in.batch.chunk.writer;
 
 import com.yaini.adapter.in.batch.item.CustomerItem;
 import java.util.List;

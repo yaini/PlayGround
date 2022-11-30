@@ -1,4 +1,4 @@
-package com.yaini.adapter.in.batch.tasklet.chunk.processor;
+package com.yaini.adapter.in.batch.chunk.processor;
 
 import com.yaini.adapter.in.batch.item.StudentReadItem;
 import com.yaini.adapter.in.batch.item.StudentWriteItem;

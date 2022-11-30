@@ -1,10 +1,10 @@
 package com.yaini.adapter.in.batch;
 
+import com.yaini.adapter.in.batch.chunk.processor.CustomerProcessor;
+import com.yaini.adapter.in.batch.chunk.processor.CustomerProcessorClassifier;
+import com.yaini.adapter.in.batch.chunk.reader.CustomerReader;
+import com.yaini.adapter.in.batch.chunk.writer.CustomerWriter;
 import com.yaini.adapter.in.batch.item.CustomerItem;
-import com.yaini.adapter.in.batch.tasklet.chunk.processor.CustomerProcessor;
-import com.yaini.adapter.in.batch.tasklet.chunk.processor.CustomerProcessorClassifier;
-import com.yaini.adapter.in.batch.tasklet.chunk.reader.CustomerReader;
-import com.yaini.adapter.in.batch.tasklet.chunk.writer.CustomerWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

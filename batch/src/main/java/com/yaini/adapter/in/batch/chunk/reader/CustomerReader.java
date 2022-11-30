@@ -1,7 +1,7 @@
-package com.yaini.adapter.in.batch.tasklet.chunk.reader;
+package com.yaini.adapter.in.batch.chunk.reader;
 
 import com.yaini.adapter.in.batch.item.CustomerItem;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
@@ -13,7 +13,7 @@ public class CustomerReader implements ItemReader<CustomerItem> {
   private List<CustomerItem> items;
 
   public CustomerReader(final List<CustomerItem> items) {
-    this.items = new ArrayList<>(items);
+    this.items = new LinkedList<>(items);
   }
 
   @Override

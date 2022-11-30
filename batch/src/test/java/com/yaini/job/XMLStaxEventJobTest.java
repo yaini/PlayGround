@@ -3,6 +3,7 @@ package com.yaini.job;
 import com.yaini.adapter.in.batch.XMLStaxEventJobConfig;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.ExitStatus;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 
+@Disabled
 @EnableAutoConfiguration
 @EnableBatchProcessing
 @SpringBatchTest
