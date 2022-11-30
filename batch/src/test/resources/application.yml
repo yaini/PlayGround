@@ -1,9 +1,4 @@
 spring:
-  batch:
-    job:
-      names: SIMPLE_JOB
-    jdbc:
-      initialize-schema: never
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:23306/batch

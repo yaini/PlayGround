@@ -1,9 +1,9 @@
 package com.yaini.adapter.in.batch;
 
+import com.yaini.adapter.in.batch.chunk.processor.StudentProcessor;
+import com.yaini.adapter.in.batch.chunk.writer.StudentWriter;
 import com.yaini.adapter.in.batch.item.StudentReadItem;
 import com.yaini.adapter.in.batch.item.StudentWriteItem;
-import com.yaini.adapter.in.batch.processor.StudentProcessor;
-import com.yaini.adapter.in.batch.writer.StudentWriter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
